@@ -1,0 +1,21 @@
+body{
+  background: url(../img/backgr2.jpg) no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  
+}
+#books img, #book img{
+  width:100%;
+}
+
+@media(min-width:960px){
+  #books .col-md-3 .well{
+    height: 390px;
+  }
+
+  #books .col-md-3 img{
+    height:240px;
+  }
+}
