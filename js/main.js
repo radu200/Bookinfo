@@ -1,13 +1,13 @@
 $(document).ready(() => {
   $('#searchForm').on('submit ', (e) => {
     let searchText = $('#searchText').val();
-    getMovies(searchText);
+    getBooks(searchText);
     e.preventDefault();
 
   });
 });
 
-function getMovies(searchText){
+function getBooks(searchText){
  axios.get(`https://www.googleapis.com/books/v1/volumes?q=${searchText}`)
  .then((response) => {
       let books = response.data.items;
@@ -18,7 +18,7 @@ function getMovies(searchText){
             <div class="well text-center">
               <img src="${book.volumeInfo.imageLinks.thumbnail}">
                <h6>${book.volumeInfo.authors}</h6>
-            <a onclick="bookSelected('${book.id}')" class="btn btn-primary" href="#">Book Details</a>
+            <a class="btn btn-primary" href="book.html?bookId=${book.id}">Book Details</a>
                </div>
           </div>
         `
@@ -30,15 +30,22 @@ function getMovies(searchText){
       console.log(err);
     });
 }
-function bookSelected(id){
-  sessionStorage.setItem('bookId', id);
-  window.location = 'book.html';
-  return false;
-  
-}
+
+
+  function getQueryVariable(variable)
+    {
+       var query = window.location.search.substring(1);
+       var vars = query.split("&");
+       for (var i=0;i<vars.length;i++) {
+               var pair = vars[i].split("=");
+               if(pair[0] == variable){return pair[1];}
+       }
+       return(false);
+     }
+
 
 function getBook(){
-  let bookId = sessionStorage.getItem('bookId');
+  let bookId = getQueryVariable('bookId');
   axios.get(`https://www.googleapis.com/books/v1/volumes?q=${bookId}`)
     .then((response) => {
       //console.log(response);
